@@ -73,9 +73,9 @@
 #燃动夏季_SH助力
 14/41 7-14 * * * node /scripts/jd_summer_movement_help.js >> /scripts/logs/jd_summer_movement_help.log 2>&1
 #燃动夏季_下注
-14/41 7-14 * * * node /scripts/jd_summer_movement_bet.js >> /scripts/logs/jd_summer_movement_bet.log 2>&1
+11 12,20 * * * node /scripts/jd_summer_movement_bet.js >> /scripts/logs/jd_summer_movement_bet.log 2>&1
 #燃动夏季_店铺
-14/41 7-14 * * * node /scripts/jd_summer_movement_cardAndmap.js >> /scripts/logs/jd_summer_movement_cardAndmap.log 2>&1
+7 12,13 * * * node /scripts/jd_summer_movement_cardAndmap.js >> /scripts/logs/jd_summer_movement_cardAndmap.log 2>&1
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
