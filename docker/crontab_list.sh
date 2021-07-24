@@ -48,8 +48,6 @@
 30 7 * * * node /scripts/jd_DrawEntrance.js >> /scripts/logs/jd_DrawEntrance.log 2>&1
 #早起福利
 30 7 * * * node /scripts/jd_goodMorning.js >> /scripts/logs/jd_goodMorning.log 2>&1
-#京享值PK
-15 0,6,13,19,21 * * * node /scripts/jd_jxzpk.js >> /scripts/logs/jd_jxzpk.log 2>&1
 # 京东零食街
 0 11 * * * node /scripts/jd_lsj.js >> /scripts/logs/jd_lsj.log 2>&1
 #来客有礼小程序 送豆得豆
