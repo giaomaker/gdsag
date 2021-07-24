@@ -146,7 +146,9 @@
 # 京东秒秒币
 10 7 * * * node /scripts/jd_ms.js >> /scripts/logs/jd_ms.log 2>&1
 # 京喜财富岛
-30 * * * *  node /scripts/jd_cfd.js >> /scripts/logs/jd_cfd.log 2>&1
+18 0-23/2 * * * node /scripts/jx_cfd.js >> /scripts/logs/jx_cfd.log 2>&1
+# 京喜财富岛
+30 * * * *  node /scripts/jx_cfd2.js >> /scripts/logs/jx_cfd2.log 2>&1
 # 京东极速版签到+赚现金任务
 15 0-23/2 * * *  node /scripts/jd_speed_sign.js >> /scripts/logs/jd_speed_sign.log 2>&1
 # 京东抽奖机
@@ -191,7 +193,7 @@
 0 6 * * * node /scripts/jd_ckcheck.js >> /scripts/logs/jd_ckcheck.log 2>&1
 ##############默认注释活动##############
 # 京东试用（默认注释，请配合取关脚本使用）
-#10 0 * * *  node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1
+30 6 * * *  node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1
 # 删除优惠券(默认注释，如需要自己开启，如有误删，已删除的券可以在回收站中还原，慎用)
 #20 9 * * 6 node /scripts/jd_delCoupon.js >> /scripts/logs/jd_delCoupon.log 2>&1
 # 京东家庭号(暂不知最佳cron)

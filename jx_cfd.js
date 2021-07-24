@@ -1,7 +1,7 @@
 /*
   https://st.jingxi.com/fortune_island/index2.html
 
-  18 0-23/2 * * * https://raw.githubusercontent.com/smiek2221/scripts/master/gua_wealth_island.js 财富大陆
+  18 0-23/2 * * * jx_cfd.js
 
 */
 
@@ -13,7 +13,7 @@ const $ = new Env('财富大陆');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 // const notify = $.isNode() ? require('./sendNotify') : '';
 $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
-const UA = `jdpingou;iPhone;4.11.0;${Math.ceil(Math.random()*2+12)}.${Math.ceil(Math.random()*4)};${randomString(40)};`
+let UA = `jdapp;iPhone;10.0.5;${Math.ceil(Math.random()*2+12)}.${Math.ceil(Math.random()*4)};${randomString(40)};`
 function randomString(e) {
   e = e || 32;
   let t = "abcdefhijkmnprstwxyz2345678", a = t.length, n = "";
@@ -61,43 +61,41 @@ $.appId = 10032;
       $.index = i + 1;
       $.isLogin = true;
       console.log(`\n*****开始【京东账号${$.index}】${$.UserName}****\n`);
+      UA = `jdapp;iPhone;10.0.5;${Math.ceil(Math.random()*2+12)}.${Math.ceil(Math.random()*4)};${randomString(40)};`
       await run();
     }
   }
-  // 助力
-  let res = [], res2 = [];
-  $.InviteLists = []
-  if (HelpAuthorFlag) {
-    $.innerInviteList = await getAuthorShareCode('');
-    res2 = await getAuthorShareCode('');
-    $.innerInviteLists = getRandomArrayElements([...res, ...res2], [...res, ...res2].length);
-    $.InviteLists.push(...$.InviteList,...$.innerInviteList,...$.innerInviteLists);
-  }else{
-    $.InviteLists.push(...$.InviteList);
-  }
-  for (let i = 0; i < cookiesArr.length; i++) {
-    $.cookie = cookiesArr[i];
-    $.canHelp = true;
-    $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-    $.index = i + 1;
-    if ($.InviteLists && $.InviteLists.length) console.log(`\n******开始【邀请好友助力】*********\n`);
-    for (let j = 0; j < $.InviteLists.length && $.canHelp; j++) {
-      $.inviteId = $.InviteLists[j];
-      console.log(`${$.UserName} 助力 ${$.inviteId}`);
-      let res = await taskGet(`story/helpbystage`, '_cfd_t,bizCode,dwEnv,ptag,source,strShareId,strZone', `&strShareId=${$.inviteId}`)
-      if(res && res.iRet == 0){
-        console.log(`助力成功: 获得${res.Data && res.Data.GuestPrizeInfo && res.Data.GuestPrizeInfo.strPrizeName || ''}`)
-      }else if(res && res.sErrMsg){
-        console.log(res.sErrMsg)
-        if(res.sErrMsg.indexOf('助力次数达到上限') > -1 || res.iRet === 2232 || res.sErrMsg.indexOf('助力失败') > -1){
-          break
-        }
-      }else{
-        console.log(JSON.stringify(res))
-      }
-      await $.wait(1000);
+      $.InviteLists =[]
+    $.AuthoLists = [
+        ""
+    ]
+    if(HelpAuthorFlag){
+        InviteLists.push(...$.AuthoLists);
     }
-  }
+    $.InviteLists.push(...$.InviteList);
+    for (let i = 0; i < cookiesArr.length; i++) {
+        $.cookie = cookiesArr[i];
+        $.canHelp = true;
+        $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+        $.index = i + 1;
+        if ($.InviteLists && $.InviteLists.length) console.log(`\n******开始【邀请好友助力】*********\n`);
+        for (let j = 0; j < $.InviteLists.length && $.canHelp; j++) {
+            $.inviteId = $.InviteLists[j];
+            console.log(`${$.UserName} 助力 ${$.inviteId}`);
+            let res = await taskGet(`story/helpbystage`, '_cfd_t,bizCode,dwEnv,ptag,source,strShareId,strZone', `&strShareId=${$.inviteId}`)
+            if(res && res.iRet == 0){
+                console.log(`助力成功: 获得${res.Data && res.Data.GuestPrizeInfo && res.Data.GuestPrizeInfo.strPrizeName || ''}`)
+            }else if(res && res.sErrMsg){
+                console.log(res.sErrMsg)
+                if(res.sErrMsg.indexOf('助力次数达到上限') > -1 || res.iRet === 2232 || res.sErrMsg.indexOf('助力失败') > -1){
+                    break
+                }
+            }else{
+                console.log(JSON.stringify(res))
+            }
+            await $.wait(1000);
+        }
+    }
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -367,7 +365,7 @@ async function sign(){
     
     if($.Aggrtask && $.Aggrtask.Data && $.Aggrtask.Data.Employee && $.Aggrtask.Data.Employee.EmployeeList){
         if($.Aggrtask.Data && $.Aggrtask.Data.Employee && $.Aggrtask.Data.Employee.EmployeeList){
-        console.log(`\n领取邀请奖励`)
+        console.log(`\n领取邀请奖励(${$.Aggrtask.Data.Employee.EmployeeList.length || 0}/${$.Aggrtask.Data.Employee.dwNeedTotalPeople || 0})`)
         for(let i of $.Aggrtask.Data.Employee.EmployeeList){
           if(i.dwStatus == 0){
             let res = await taskGet(`story/helpdraw`, '_cfd_t,bizCode,dwEnv,dwUserId,ptag,source,strZone', `&ptag=&dwUserId=${i.dwId}`)
