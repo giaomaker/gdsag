@@ -1,6 +1,6 @@
 /**
  *  燃动夏季
- *  25 0,6-23/2 * * *
+ *  25 0,6-23/2 * * * jd_summer_movement.js
  *  脚本会助力作者百元守卫战 参数helpAuthorFlag 默认助力
  *  百元守卫战,先脚本内互助，多的助力会助力作者
  *  部分解密参考了@zhangyun173
@@ -226,7 +226,6 @@ async function movement() {
     //做任务
     for (let i = 0; i < $.taskList.length && !$.hotFlag; i++) {
       $.oneTask = $.taskList[i];
-      if(!aabbiill()) continue;
       if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) { // 21 开通
         $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
         for (let j = 0; j < $.activityInfoList.length; j++) {
@@ -351,7 +350,6 @@ async function movement() {
     if(!$.hotFlag) await takePostRequest('qryCompositeMaterials');
     for (let i = 0; i < $.shopInfoList.length; i++) {
       let taskbool = false
-      if(!aabbiill()) continue;
       $.shopSign = $.shopInfoList[i].extension.shopId;
       console.log(`执行第${i+1}个店铺任务：${$.shopInfoList[i].name} ID:${$.shopSign}`);
       $.shopResult = {};
