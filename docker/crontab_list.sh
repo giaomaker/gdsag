@@ -187,6 +187,8 @@
 1 7,12,19 * * * node /scripts/jd_beauty.js >> /scripts/logs/jd_beauty.log 2>&1
 #京东签到图形验证
 14 10 * * * node /scripts/jd_sign_graphics.js >> /scripts/logs/jd_sign_graphics.log 2>&1
+#京喜签到
+12 0 * * * node /scripts/jx_sign.js >> /scripts/logs/jx_sign.log 2>&1
 #ck检测
 0 6 * * * node /scripts/jd_ckcheck.js >> /scripts/logs/jd_ckcheck.log 2>&1
 ##############默认注释活动##############
