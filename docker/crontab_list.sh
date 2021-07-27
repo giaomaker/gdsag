@@ -76,7 +76,8 @@
 7 12,13 * * * node /scripts/jd_summer_movement_cardAndmap.js >> /scripts/logs/jd_summer_movement_cardAndmap.log 2>&1
 #特务Z
 23 0,9 24-27 7 * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
-
+#京喜领88元红包
+15 0,10,23 * * * node /scripts/jx_lhb.js >> /scripts/logs/jx_lhb.log 2>&1
 
 ##############长期活动##############
 # 签到
