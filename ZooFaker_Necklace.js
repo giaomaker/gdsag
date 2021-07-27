@@ -1,6 +1,3 @@
-let joyytoken; // = "MDFLbmZBbzAxMQ==.elhUd1Z8XlN5XXtbUz9ceyIicQZyPFQ0EXpCUG1aZ1wYcxF6EAB1IHw6BXMFCSUhCV4tGiMgJBE7ExIudlMY.6d560ccc";
-let joyytoken_count = 1;
-
 function encrypt_3(e) {
     return function (e) {
         if (Array.isArray(e)) return encrypt_3_3(e)
@@ -80,7 +77,7 @@ var K256 = new Array(
 var ihash, count, buffer;
 var sha256_hex_digits = "0123456789abcdef";
 
-/* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters:
+/* Add 32-bit integers with 16-bit operations (bug in some JS-interpreters: 
 overflow) */
 function safe_add(x, y) {
     var lsw = (x & 0xffff) + (y & 0xffff);
@@ -461,8 +458,8 @@ let utils = {
             i = e.indexOf(t) + t.length,
             o = e.length;
         if ((r = (r = e.slice(i, o).split(".")).map(function (e) {
-            return m.atobPolyfill(e)
-        }))[1] && r[0] && r[2]) {
+                return m.atobPolyfill(e)
+            }))[1] && r[0] && r[2]) {
             var a = r[0].slice(2, 7),
                 s = r[0].slice(7, 9),
                 u = m.xorEncrypt(r[1] || "", a).split("~");
@@ -508,8 +505,8 @@ let utils = {
             var o = m.slice(0);
             for (j = 0; j < 80; j++)
                 w[j] = j < 16 ? s[i + j] : rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1),
-                    t = rol(m[0], 5) + f[j / 20 | 0]() + m[4] + w[j] + k[j / 20 | 0] | 0,
-                    m[1] = rol(m[1], 30), m.pop(), m.unshift(t);
+                t = rol(m[0], 5) + f[j / 20 | 0]() + m[4] + w[j] + k[j / 20 | 0] | 0,
+                m[1] = rol(m[1], 30), m.pop(), m.unshift(t);
             for (j = 0; j < 5; j++) m[j] = m[j] + o[j] | 0;
         };
         t = new DataView(new Uint32Array(m).buffer);
@@ -526,90 +523,55 @@ let utils = {
         for (i = 0; i < s.length; i++)
             if ((c = s.charCodeAt(i)) < 0x80) r.push(c);
             else if (c < 0x800) r.push(0xC0 + (c >> 6 & 0x1F), 0x80 + (c & 0x3F));
-            else {
-                if ((x = c ^ 0xD800) >> 10 == 0) //对四字节UTF-16转换为Unicode
-                    c = (x << 10) + (s.charCodeAt(++i) ^ 0xDC00) + 0x10000,
-                        r.push(0xF0 + (c >> 18 & 0x7), 0x80 + (c >> 12 & 0x3F));
-                else r.push(0xE0 + (c >> 12 & 0xF));
-                r.push(0x80 + (c >> 6 & 0x3F), 0x80 + (c & 0x3F));
-            };
+        else {
+            if ((x = c ^ 0xD800) >> 10 == 0) //对四字节UTF-16转换为Unicode
+                c = (x << 10) + (s.charCodeAt(++i) ^ 0xDC00) + 0x10000,
+                r.push(0xF0 + (c >> 18 & 0x7), 0x80 + (c >> 12 & 0x3F));
+            else r.push(0xE0 + (c >> 12 & 0xF));
+            r.push(0x80 + (c >> 6 & 0x3F), 0x80 + (c & 0x3F));
+        };
         return r;
     },
-    gettoken: function () {
-        const https = require('https');
-        var body = `content={"appname":"50082","whwswswws":"","jdkey":"","body":{"platform":"1"}}`;
-        return new Promise((resolve, reject) => {
-            let options = {
-                hostname: "bh.m.jd.com",
-                port: 443,
-                path: "/gettoken",
-                method: "POST",
-                rejectUnauthorized: false,
-                headers: {
-                    "Content-Type": "text/plain;charset=UTF-8",
-                    "Host": "bh.m.jd.com",
-                    "Origin": "https://h5.m.jd.com",
-                    "X-Requested-With": "com.jingdong.app.mall",
-                    "Referer": "https://h5.m.jd.com/babelDiy/Zeus/41Lkp7DumXYCFmPYtU3LTcnTTXTX/index.html",
-                    "User-Agent": `jdapp;android;10.0.2;9;8363237353630343334383837333-73D2164353034363465693662666;network/wifi;model/MI 8;addressid/138087843;aid/0a4fc8ec9548a7f9;oaid/3ac46dd4d42fa41c;osVer/28;appBuild/88569;partner/jingdong;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 9; MI 8 Build/PKQ1.180729.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045715 Mobile Safari/537.36`,
-                }
-            }
-            const req = https.request(options, (res) => {
-                res.setEncoding('utf-8');
-                let rawData = '';
-                res.on('error', reject);
-                res.on('data', chunk => rawData += chunk);
-                res.on('end', () => resolve(rawData));
-            });
-            req.write(body);
-            req.on('error', reject);
-            req.end();
-        });
-    },
-    get_risk_result: async function ($) {
+    getBody: async function ($ = {}) {
+        var pin = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
         var appid = "50082";
         var TouchSession = this.getTouchSession();
-        if (!joyytoken || joyytoken_count > 18) {
-            joyytoken = JSON.parse(await this.gettoken())["joyytoken"];
-            //console.log("第一次请求joyytoken");
-            joyytoken_count = 0;
-        }
-        joyytoken_count++;
+
         let riskData;
         switch ($.action) {
-            case 'startTask':
-                riskData = {
-                    taskId: $.id
-                };
-                break;
-            case 'chargeScores':
-                riskData = {
-                    bubleId: $.id
-                };
-                break;
-            case 'sign':
-                riskData = {};
-            default:
-                break;
+          case 'startTask':
+            riskData = { taskId: $.id };
+            break;
+          case 'chargeScores':
+            riskData = { bubleId: $.id };
+            break;
+          case 'sign':
+            riskData = {};
+            break;
+          case 'exchangeGift':
+            riskData = { scoreNums: $.id, giftConfigId: $.giftConfigId || 198 };
+            break;
+          default:
+            break;
         }
 
         var random = Math.floor(1e+6 * Math.random()).toString().padEnd(6, '8');
         var senddata = this.objToString2(this.RecursiveSorting({
-            pin: $.UserName,
+            pin,
             random,
             ...riskData
         }));
         var time = this.getCurrentTime();
         // time = 1626970587918;
-        var encrypt_id = this.decipherJoyToken(appid + joyytoken, appid)["encrypt_id"].split(",");
+        var encrypt_id = this.decipherJoyToken(appid + $.joyToken, appid)["encrypt_id"].split(",");
         var nonce_str = this.getRandomWord(10);
         // nonce_str="iY8uFBbYX7";
         var key = this.getKey(encrypt_id[2], nonce_str, time.toString());
 
-        var str1 = `${senddata}&token=${joyytoken}&time=${time}&nonce_str=${nonce_str}&key=${key}&is_trust=1`;
+        var str1 = `${senddata}&token=${$.joyToken}&time=${time}&nonce_str=${nonce_str}&key=${key}&is_trust=1`;
         //console.log(str1);
         str1 = this.sha1(str1);
-        var outstr = [time, "1" + nonce_str + joyytoken, encrypt_id[2] + "," + encrypt_id[3]];
+        var outstr = [time, "1" + nonce_str + $.joyToken, encrypt_id[2] + "," + encrypt_id[3]];
         outstr.push(str1);
         outstr.push(this.getCrcCode(str1));
         outstr.push("C");
@@ -627,11 +589,11 @@ let utils = {
             jk: "a",
             mj: [1, 0, 0],
             msg: "",
-            nav: "88569",
-            np: "Linux aarch64",
-            nv: "Google Inc.",
+            nav: "167741",
+            np: "iPhone",
+            nv: "Apple Computer, Inc.",
             pdn: [],
-            ro: ["f", "f", "f", "f", "f", "f", "f"],
+            ro: ["iPhone10,2", "10.0.8", "iOS", "14.4.2", "167741", "f", "a"],
             scr: [818, 393],
             ss: TouchSession,
             t: time,
@@ -647,7 +609,6 @@ let utils = {
         outstr.push(data);
         outstr.push(this.getCrcCode(data));
         //console.log(outstr.join("~"));
-        $.joyytoken = `joyytoken=${appid + joyytoken};`;
         return {
             extraData: {
                 log: outstr.join("~"),
@@ -659,5 +620,5 @@ let utils = {
     }
 };
 module.exports = {
-    utils
+  utils
 }
