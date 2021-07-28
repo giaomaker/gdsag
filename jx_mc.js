@@ -2,6 +2,7 @@
 /**
  * 京喜牧场
  * 买、喂、收蛋、锄草、挑逗
+20 0-23/3 * * * jx_mc.js
  */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
