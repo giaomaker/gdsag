@@ -13,7 +13,7 @@ cron "10 8 * * *" script-path=https://raw.githubusercontent.com/passerby-b/JDDJ/
 
 */
 
-const $ = new Env("京东到家鲜豆庄园");
+const $ = new API("jddj_plantBeans");
 let ckPath = './jdCookie.js';//ck路径,环境变量:JDDJ_CKPATH
 
 let cookies = [];
