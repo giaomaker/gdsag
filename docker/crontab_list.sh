@@ -8,8 +8,6 @@
 15 10 * * * node /scripts/jd_djjl.js >> /scripts/logs/jd_djjl.log 2>&1
 # 天降红包
 30 7 * * * node /scripts/jd_SplitRedPacket.js >> /scripts/logs/jd_SplitRedPacket.log 2>&1
-# 京东到家果园任务
-10 0,3,8,11,17 * * * node /scripts/jd_djfruit.js >> /scripts/logs/jd_djfruit.log 2>&1
 # 金榜创造营
 13 1,22 * * * node /scripts/jd_gold_creator.js >> /scripts/logs/jd_gold_creator.log 2>&1
 # 主会场红包雨
@@ -66,16 +64,6 @@
 21 9 * * * node /scripts/jd_MMdou.js >> /scripts/logs/jd_MMdou.log 2>&1
 #MM领京豆
 6 9,12 * * * node /scripts/jd_mb.js >> /scripts/logs/jd_mb.log 2>&1
-#燃动夏季
-12 0,6-23/2 * * * node /scripts/jd_summer_movement.js >> /scripts/logs/jd_summer_movement.log 2>&1
-#燃动夏季_SH助力
-14/41 7-14 * * * node /scripts/jd_summer_movement_help.js >> /scripts/logs/jd_summer_movement_help.log 2>&1
-#燃动夏季_下注
-11 12,20 * * * node /scripts/jd_summer_movement_bet.js >> /scripts/logs/jd_summer_movement_bet.log 2>&1
-#燃动夏季_店铺
-7 12,13 * * * node /scripts/jd_summer_movement_cardAndmap.js >> /scripts/logs/jd_summer_movement_cardAndmap.log 2>&1
-#特务Z
-23 0,9 24-27 7 * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
 #京喜领88元红包
 15 0,10,23 * * * node /scripts/jx_lhb.js >> /scripts/logs/jx_lhb.log 2>&1
 
@@ -182,12 +170,8 @@
 10 10-20/2 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
 # 宠汪汪偷好友积分与狗粮
 13 0-21/3 * * * node /scripts/jd_joy_steal.js >> /scripts/logs/jd_joy_steal.log 2>&1
-# 京东价格保护
-5 0 * * * node /scripts/jd_priceProtect.js >> /scripts/logs/jd_priceProtect.log 2>&1
-# 跳跳乐瓜分京豆
-15 0,12,22 * * * node /scripts/jd_jump.js >> /scripts/logs/jd_jump.log 2>&1
 # 取关京东店铺和商品
-55 23 * * * node /scripts/jd_unsubscribe.js >> /scripts/logs/jd_jump.log 2>&1
+55 23 * * * node /scripts/jd_unsubscribe.js >> /scripts/logs/jd_unsubscribe.log 2>&1
 # 美丽研究院
 1 7,12,19 * * * node /scripts/jd_beauty.js >> /scripts/logs/jd_beauty.log 2>&1
 #京东签到图形验证
