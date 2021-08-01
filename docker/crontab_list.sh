@@ -66,7 +66,10 @@
 6 9,12 * * * node /scripts/jd_mb.js >> /scripts/logs/jd_mb.log 2>&1
 #京喜领88元红包
 15 0,10,23 * * * node /scripts/jx_lhb.js >> /scripts/logs/jx_lhb.log 2>&1
-
+#汪汪乐园养joy
+20 0-23/3 * * * node /scripts/jd_joypark_joy.js >> /scripts/jd_joypark_joy.log 2>&1
+#汪汪乐园每日任务
+20 7,9,17,20 * * * node /scripts/jd_joypark_task.js >> /scripts/logs/jd_joypark_task.log 2>&1
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
