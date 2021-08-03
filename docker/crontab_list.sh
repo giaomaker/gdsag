@@ -70,6 +70,8 @@
 20 0-23/3 * * * node /scripts/jd_joypark_joy.js >> /scripts/jd_joypark_joy.log 2>&1
 #汪汪乐园每日任务
 20 7,9,17,20 * * * node /scripts/jd_joypark_task.js >> /scripts/logs/jd_joypark_task.log 2>&1
+#特务Z
+23 8,9 3 8 * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -118,7 +120,7 @@
 # 京东汽车(签到满500赛点可兑换500京豆)
 0 0 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
-33 0-23/4 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
+23 1,12,22 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
 # 京东直播(每日18豆)
 10-20/5 12 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
 # 超级直播间红包雨
@@ -162,7 +164,7 @@
 # 领金贴
 10 0 * * * node /scripts/jd_jin_tie.js >> /scripts/logs/jd_jin_tie.log 2>&1
 # 京喜牧场
-20 0-23/3 * * * node /scripts/jx_mc.js >> /scripts/logs/jx_mc.log 2>&1
+20 0-23/5 * * * node /scripts/jx_mc.js >> /scripts/logs/jx_mc.log 2>&1
 # 宠汪汪
 15 */2 * * * node /scripts/jd_joy.js >> /scripts/logs/jd_joy.log 2>&1
 # 宠汪汪积分兑换京豆
