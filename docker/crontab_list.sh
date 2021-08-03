@@ -72,6 +72,8 @@
 20 7,9,17,20 * * * node /scripts/jd_joypark_task.js >> /scripts/logs/jd_joypark_task.log 2>&1
 #特务Z
 23 8,9 3 8 * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
+#店铺签到
+30 9,16 * * * node /scripts/jd_dpqd.js >> /scripts/logs/jd_dpqd.log 2>&1
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
