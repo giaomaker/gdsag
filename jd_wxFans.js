@@ -2,7 +2,7 @@
 * 粉丝互动，没啥水
 * 修改温某的脚本，由于温某不干活，只能自己动手修改了
 * 注意：脚本会加购，脚本会加购，脚本会加购
-* 若发现脚本里没有的粉丝 互动活动。欢迎反馈给我
+* 若发现脚本里没有的粉丝互动活动。欢迎反馈给我
 * cron  34 6,18 * * * jd_wxFans.js
 * */
 const $ = new Env('粉丝互动');
@@ -14,7 +14,6 @@ const activityList = [
     {'actid':'c75ae2afd7ff4aec9ed47008b08400f7','endTime':1630288800000},
     {'actid':'ea52a4da34d34be0a1c6470bd7d92063','endTime':1628352000000},
     {'actid':'3da50af9e8664746844c5456b8920b7d','endTime':1630425599000},
-    {'actid':'4374884673374f9c883d21ceea5694f1','endTime':1628524799000},
     {'actid':'162c43699ba945e8adb83b2bd5fe0142','endTime':1630425599000},
     {'actid':'31073025b8a34de59d8d55faffdd44ab','endTime':1630425599000},
     {'actid':'5a8aea7f27b84900a14624fe9dcc8fe1','endTime':1628956799000},

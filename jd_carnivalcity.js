@@ -453,7 +453,7 @@ function check() {
             }
           }
           if (str.length > 0) {
-            const url = 'https://api.m.jd.com/api/#/integralDetail';
+            const url = 'https://carnivalcity.m.jd.com/#/integralDetail';
             $.msg($.name, '', `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${str}\n兑换地址：${url}`, { 'open-url': url });
             if ($.isNode()) await notify.sendNotify($.name, `京东账号 ${$.index} ${$.nickName || $.UserName}\n积分抽奖获得：${str}\n兑换地址：${url}`);
           }
@@ -511,7 +511,7 @@ function myRank() {
 //领取往期奖励API
 function saveJbean(date) {
   return new Promise(resolve => {
-    const body = "date=" + date;
+    const body = {"date":`${date}`};
     const options = taskPostUrl('/khc/rank/getRankJingBean', body)
     $.post(options, (err, resp, data) => {
       try {
@@ -546,7 +546,7 @@ async function doHelp() {
   }
 }
 //助力API
-function toHelp(code = "ca5cb827-4f0d-4133-85cc-9059ef8588e0") {
+function toHelp(code = "123") {
   return new Promise(resolve => {
     const body = {"shareId":`${code}`};
     const options = taskPostUrl('/khc/task/doSupport', body)
@@ -691,6 +691,25 @@ function getListRank() {
         $.logErr(e, resp)
       } finally {
         resolve(data);
+      }
+    })
+  })
+}
+
+function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/smiek2221/updateTeam@master/shareCodes/jd_cityShareCodes.json') {
+  return new Promise(resolve => {
+    $.get({url , headers:{"User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")}, timeout: 200000}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          $.updatePkActivityIdRes = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
       }
     })
   })
