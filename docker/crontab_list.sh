@@ -78,7 +78,8 @@
 10 0,8 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
 #荣耀换新
 20 8 * * * node /scripts/jd_ryhx.js >> /scripts/logs/jd_ryhx.log 2>&1
-
+#七夕情报局8.4-8.15
+36 0,10,21 4-15 8 * node /scripts/jd_qxqbj.js >> /scripts/logs/jd_qxqbj.log 2>&1
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -204,6 +205,8 @@
 25 */1 * * * node /scripts/jd_jddj_getPoints.js >> /scripts/logs/jd_jddj_getPoints.log 2>&1
 #京东到家鲜豆庄园
 10 8 * * * node /scripts/jd_jddj_plantBeans.js >> /scripts/logs/jd_jddj_plantBeans.log 2>&1
+#京东价格保护
+5 0 * * * node /scripts/jd_priceProtect.js >> /scripts/logs/jd_priceProtect.log 2>&1
 ##############默认注释活动##############
 # 京东试用（默认注释，请配合取关脚本使用）
 30 6 * * *  node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1
