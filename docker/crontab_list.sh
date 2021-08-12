@@ -80,6 +80,10 @@
 20 8 * * * node /scripts/jd_ryhx.js >> /scripts/logs/jd_ryhx.log 2>&1
 #七夕情报局8.4-8.15
 36 0,10,21 4-15 8 * node /scripts/jd_qxqbj.js >> /scripts/logs/jd_qxqbj.log 2>&1
+#家电815周年庆礼包
+54 5 9-15 8 * node /scripts/jd_appliances.js >> /scripts/logs/jd_appliances.log 2>&1
+
+
 ##############长期活动##############
 # 签到
 8 0,8 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -129,10 +133,6 @@
 0 0 * * * node /scripts/jd_car.js >> /scripts/logs/jd_car.log 2>&1
 # 领京豆额外奖励(每日可获得3京豆)
 23 1,12,22 * * * node /scripts/jd_bean_home.js >> /scripts/logs/jd_bean_home.log 2>&1
-# 京东直播(每日18豆)
-10-20/5 12 * * * node /scripts/jd_live.js >> /scripts/logs/jd_live.log 2>&1
-# 超级直播间红包雨
-0,30 0-23/1 * * * node /scripts/jd_live_redrain.js >> /scripts/logs/jd_live_redrain.log 2>&1
 # 微信小程序京东赚赚
 30 0,1 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
 # 京东汽车旅程赛点兑换金豆
