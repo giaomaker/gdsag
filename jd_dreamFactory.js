@@ -152,11 +152,16 @@ function getActiveId(url = 'https://wqsd.jd.com/pingou/dream_factory/index.html'
                 const start = item.start;
                 const end = item.end;
                 const link = item.link;
-                if (new Date(item.end).getTime() > Date.now()) {
+                if ((new Date(item.start).getTime() <= Date.now()) && (new Date(item.end).getTime() > Date.now())) {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
                     console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}`);
                     tuanActiveId = link.match(/activeId=(.*),/)[1];
                     break
+                  }
+                }else if ((new Date(item.start).getTime() > Date.now()) && (new Date(item.end).getTime() > Date.now())) {
+                  if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
+                    console.log(`\n团活动ID: ${link.match(/activeId=(.*),/)[1]}\n有效时间：${start} - ${end}\n团ID还未开始`);
+                    tuanActiveId = '';
                   }
                 } else {
                   if (link && link.match(/activeId=(.*),/) && link.match(/activeId=(.*),/)[1]) {
@@ -1357,28 +1362,6 @@ function shareCodesFormat() {
 
 function requireConfig() {
   return new Promise(async resolve => {
-    // tuanActiveId = $.isNode() ? (process.env.TUAN_ACTIVEID || tuanActiveId) : ($.getdata('tuanActiveId') || tuanActiveId);
-    // if (!tuanActiveId) {
-    //   await updateTuanIdsCDN('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/jd_updateFactoryTuanId.json');
-    //   if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-    //     tuanActiveId = $.tuanConfigs['tuanActiveId'];
-    //     console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
-    //   } else {
-    //     if (!$.tuanConfigs) {
-    //       $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
-    //       await $.wait(1000)
-    //       await updateTuanIdsCDN('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_updateFactoryTuanId.json');
-    //       if ($.tuanConfigs && $.tuanConfigs['tuanActiveId']) {
-    //         tuanActiveId = $.tuanConfigs['tuanActiveId'];
-    //         console.log(`拼团活动ID: 获取成功 ${tuanActiveId}\n`)
-    //       } else {
-    //         console.log(`拼团活动ID：获取失败，将采取脚本内置活动ID\n`)
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   console.log(`自定义拼团活动ID: 获取成功 ${tuanActiveId}`)
-    // }
     console.log(`开始获取${$.name}配置文件\n`);
     //Node.js用户请在jdCookie.js处填写京东ck;
     const shareCodes = $.isNode() ? require('./jdDreamFactoryShareCodes.js') : '';

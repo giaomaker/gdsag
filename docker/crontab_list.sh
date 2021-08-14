@@ -47,7 +47,7 @@
 # 京东零食街
 0 11 * * * node /scripts/jd_lsj.js >> /scripts/logs/jd_lsj.log 2>&1
 #来客有礼小程序 送豆得豆
-45 4 * * * node /scripts/jd_sendBeans.js >> /scripts/logs/jd_sendBeans.log 2>&1
+45 0,8 * * * node /scripts/jd_sendBeans.js >> /scripts/logs/jd_sendBeans.log 2>&1
 #许愿池
 0 8,12 * * * node /scripts/jd_wish.js >> /scripts/logs/jd_wish.log 2>&1
 #7月粉丝互动
@@ -63,7 +63,7 @@
 #MM领京豆
 6 9,12 * * * node /scripts/jd_mb.js >> /scripts/logs/jd_mb.log 2>&1
 #京喜领88元红包
-15 0,10,23 * * * node /scripts/jx_lhb.js >> /scripts/logs/jx_lhb.log 2>&1
+30 1,6,21 * * * node /scripts/jx_lhb.js >> /scripts/logs/jx_lhb.log 2>&1
 #汪汪乐园养joy
 20 0-23/3 * * * node /scripts/jd_joypark_joy.js >> /scripts/jd_joypark_joy.log 2>&1
 #汪汪乐园每日任务
