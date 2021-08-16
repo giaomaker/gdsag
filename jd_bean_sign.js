@@ -2,10 +2,10 @@
 京东多合一签到,自用,可N个京东账号
 活动入口：各处的签到汇总
 Node.JS专用
-IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
-更新时间：2021-5-6
+IOS软件用户请使用 https://raw.githubusercontent.com/yongyuanlin/jd_scripts/master/utils/JD_DailyBonus.js
+8 0,8 * * * jd_bean_sign.js
+更新时间：2021-6-18
 推送通知默认简洁模式(多账号只发送一次)。如需详细通知，设置环境变量 JD_BEAN_SIGN_NOTIFY_SIMPLE 为false即可(N账号推送N次通知)。
-Modified From github https://github.com/ruicky/jd_sign_bot
  */
 const $ = new Env('京东多合一签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -15,8 +15,8 @@ const exec = require('child_process').execSync
 const fs = require('fs')
 const download = require('download');
 let resultPath = "./result.txt";
-let JD_DailyBonusPath = "./JD_DailyBonus.js";
-let outPutUrl = './';
+let JD_DailyBonusPath = "./utils/JD_DailyBonus.js";
+let outPutUrl = './utils';
 let NodeSet = 'CookieSet.json';
 let cookiesArr = [], cookie = '', allMessage = '';
 
@@ -34,7 +34,7 @@ if ($.isNode()) {
   process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE = process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE ? process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE : 'true';
   await requireConfig();
   // 下载最新代码
-  await downFile();
+  // await downFile();
   if (!await fs.existsSync(JD_DailyBonusPath)) {
     console.log(`\nJD_DailyBonus.js 文件不存在，停止执行${$.name}\n`);
     await notify.sendNotify($.name, `本次执行${$.name}失败，JD_DailyBonus.js 文件下载异常，详情请查看日志`)
@@ -47,8 +47,16 @@ if ($.isNode()) {
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
       $.index = i + 1;
       $.nickName = '';
+      $.isLogin = true;
       await TotalBean();
       console.log(`*****************开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到*******************\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+        }
+        continue
+      }
       await changeFile(content);
       await execSign();
     }
@@ -64,19 +72,9 @@ if ($.isNode()) {
 async function execSign() {
   console.log(`\n开始执行 ${$.name} 签到，请稍等...\n`);
   try {
-    // if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID) || notify.IGOT_PUSH_KEY || notify.QQ_SKEY) {
-    //   await exec(`${process.execPath} ${JD_DailyBonusPath} >> ${resultPath}`);
-    //   const notifyContent = await fs.readFileSync(resultPath, "utf8");
-    //   console.log(`👇👇👇👇👇👇👇👇👇👇👇LOG记录👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆LOG记录👆👆👆👆👆👆👆👆👆👆👆`);
-    // } else {
-    //   console.log('没有提供通知推送，则打印脚本执行日志')
-    //   await exec(`${process.execPath} ${JD_DailyBonusPath}`, { stdio: "inherit" });
-    // }
     await exec(`${process.execPath} ${JD_DailyBonusPath} >> ${resultPath}`);
     const notifyContent = await fs.readFileSync(resultPath, "utf8");
-    console.error(`👇👇👇👇👇👇👇👇👇👇👇签到详情👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆签到详情👆👆👆👆👆👆👆👆👆👆👆`);
-    // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
-    // console.log('执行完毕', new Date(new Date().getTime() + 8 * 3600000).toLocaleDateString())
+    console.log(`👇👇👇👇👇👇👇👇👇👇👇签到详情👇👇👇👇👇👇👇👇👇👇👇\n${notifyContent}\n👆👆👆👆👆👆👆👆👆签到详情👆👆👆👆👆👆👆👆👆👆👆`);
     //发送通知
     let BarkContent = '';
     if (fs.existsSync(resultPath)) {
@@ -116,9 +114,9 @@ async function downFile () {
   let url = '';
   await downloadUrl();
   if ($.body) {
-    url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
+    url = 'https://raw.githubusercontent.com/yongyuanlin/jd_scripts/master/utils/JD_DailyBonus.js';
   } else {
-    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
+    url = 'https://cdn.jsdelivr.net/gh/yongyuanlin/jd_scripts@master/utils/JD_DailyBonus.js';
   }
   try {
     const options = { }
@@ -214,7 +212,7 @@ function TotalBean() {
     })
   })
 }
-function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js') {
+function downloadUrl(url = 'https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/utils/JD_DailyBonus.js') {
   return new Promise(resolve => {
     const options = { url, "timeout": 10000 };
     if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
@@ -234,7 +232,7 @@ function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/mast
         if (err) {
           // console.log(`${JSON.stringify(err)}`)
           console.log(`检测到您当前网络环境不能访问外网,将使用jsdelivr CDN下载JD_DailyBonus.js文件`);
-          await $.http.get({url: `https://purge.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js`, timeout: 10000}).then((resp) => {
+          await $.http.get({url: `https://purge.jsdelivr.net/gh/LingFeng0918/jd_scripts@master/utils/JD_DailyBonus.js`, timeout: 10000}).then((resp) => {
             if (resp.statusCode === 200) {
               let { body } = resp;
               body = JSON.parse(body);
@@ -258,14 +256,6 @@ function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/mast
 }
 function requireConfig() {
   return new Promise(resolve => {
-    // const file = 'jd_bean_sign.js';
-    // fs.access(file, fs.constants.W_OK, (err) => {
-    //   resultPath = err ? '/tmp/result.txt' : resultPath;
-    //   JD_DailyBonusPath = err ? '/tmp/JD_DailyBonus.js' : JD_DailyBonusPath;
-    //   outPutUrl = err ? '/tmp/' : outPutUrl;
-    //   NodeSet = err ? '/tmp/CookieSet.json' : NodeSet;
-    //   resolve()
-    // });
     //判断是否是云函数环境。原函数跟目录目录没有可写入权限，文件只能放到根目录下虚拟的/temp/文件夹（具有可写入权限）
     resultPath = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/result.txt' : resultPath;
     JD_DailyBonusPath = process.env.TENCENTCLOUD_RUNENV === 'SCF' ? '/tmp/JD_DailyBonus.js' : JD_DailyBonusPath;
