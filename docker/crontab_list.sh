@@ -78,8 +78,6 @@
 10 0,8 * * * node /scripts/jd_carnivalcity.js >> /scripts/logs/jd_carnivalcity.log 2>&1
 #荣耀换新
 20 8 * * * node /scripts/jd_ryhx.js >> /scripts/logs/jd_ryhx.log 2>&1
-#七夕情报局8.4-8.15
-36 0,10,21 4-15 8 * node /scripts/jd_qxqbj.js >> /scripts/logs/jd_qxqbj.log 2>&1
 #家电815周年庆礼包
 54 5 9-15 8 * node /scripts/jd_appliances.js >> /scripts/logs/jd_appliances.log 2>&1
 #热血心跳,狂解压
