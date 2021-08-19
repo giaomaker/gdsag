@@ -84,8 +84,6 @@
 5 6,8 12-24 8 * node /scripts/jd_decompression.js >> /scripts/logs/jd_decompression.log 2>&1
 #明星小店
 10 9,18 9-25 8 * node /scripts/jd_star_shop.js >> /scripts/logs/jd_star_shop.log 2>&1
-#京东工业品抽奖
-30 0,22 17,18 8 * node /scripts/jd_industryLottery.js >> /scripts/logs/jd_industryLottery.log 2>&1
 
 ##############长期活动##############
 # 签到
